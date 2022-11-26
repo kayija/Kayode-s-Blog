@@ -15,13 +15,18 @@ from functools import wraps
 from flask import abort
 import os
 
+# using environmental variable for the database and app.config
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = ('SECRET_KEY')
+# key for local deployment
+# 8BYkEfBA6O6donzWlSihBXox7C0sKR6b
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
 # CONNECT TO DB
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+# Heroku will use postgres for the database which is an environmental variable and sqlite:///blog.db will be used locally
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL", "sqlite:///blog.db")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
