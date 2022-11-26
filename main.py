@@ -207,6 +207,7 @@ def show_post(post_id):
             text=comment_form.comment.data,
             comment_author=current_user,
             parent_post=requested_post
+
         )
         db.session.add(new_comment)
         db.session.commit()
